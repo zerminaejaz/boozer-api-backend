@@ -6,12 +6,29 @@ module Api
       end
 
       def show
-        render json: Cocktail.find(params[:id])
+        cocktail = Cocktail.find(params[:id])
+
+        cocktail_json = {
+          id: cocktail.id,
+          name: cocktail.name,
+          description: cocktail.description,
+          instructions: cocktail.instructions,
+          source: cocktail.source,
+          proportions: cocktail.proportions.map do |prop|
+            {
+              id: prop.id,
+              ingredient_name: prop.ingredient.name,
+              amount: prop.amount
+            }
+          end
+        }
+
+        render json: cocktail_json
       end
 
-      def create
-
-      end
+      # def create
+      #   byebug
+      # end
 
       def edit
 
